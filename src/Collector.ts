@@ -19,6 +19,7 @@ export class Collector {
   labels: string[] = []
   name: string
   help: string
+  type: 'counter' | 'histogram' | 'summary' | 'gauge'
 
   constructor(config: CollectorConfig) {
     if (config.registry) {
@@ -55,5 +56,9 @@ export class Collector {
   collect(): Sample[] {
     // to be implemented
     return []
+  }
+
+  reset() {
+    // to be implemented
   }
 }

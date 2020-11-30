@@ -1,5 +1,5 @@
 import { Collector, CollectorConfig, Sample } from './Collector'
-
+import { Timer } from './Timer'
 import { hashLabelMap } from './utils'
 
 interface HistogramConfig extends CollectorConfig {
@@ -13,24 +13,28 @@ interface BucketValue {
   count: number
 }
 
+export const defaultBuckets = Object.freeze([
+  0.005,
+  0.01,
+  0.025,
+  0.05,
+  0.075,
+  0.1,
+  0.25,
+  0.5,
+  0.75,
+  1,
+  2.5,
+  5,
+  7.5,
+  10,
+])
+
 export class Histogram extends Collector {
-  buckets: number[] = [
-    0.005,
-    0.01,
-    0.025,
-    0.05,
-    0.075,
-    0.1,
-    0.25,
-    0.5,
-    0.75,
-    1,
-    2.5,
-    5,
-    7.5,
-    10,
-  ]
-  bucketValueMap: Record<string, BucketValue>
+  type = 'histogram' as const
+  buckets: Readonly<number[]> = defaultBuckets
+  bucketValueMap: Record<string, BucketValue> = {}
+  timers: Record<string, Timer> = {}
 
   constructor(config: HistogramConfig) {
     super(config)
@@ -82,6 +86,10 @@ export class Histogram extends Collector {
     }
   }
 
+  reset() {
+    this.bucketValueMap = {}
+  }
+
   observe(v: number, labelMap?: Record<string, string>) {
     if (labelMap) {
       this.validateLabels(Object.keys(labelMap))
@@ -113,6 +121,16 @@ export class Histogram extends Collector {
     }
   }
 
+  startTimer(labelMap?: Record<string, string>) {
+    const start = Date.now()
+    const key = labelMap ? hashLabelMap(labelMap) : ''
+    const timer = new Timer({ histogram: this, start, labelMap })
+
+    this.timers[key] = timer
+
+    return timer
+  }
+
   collect() {
     const samples: Sample[] = []
     const bucketValues = Object.values(this.bucketValueMap)
@@ -133,7 +151,7 @@ export class Histogram extends Collector {
         ...[
           {
             labels: { ...bucketValue.labelMap, le: '+Inf' },
-            value: total,
+            value: bucketValue.count,
             name: `${this.name}_bucket`,
           },
           {

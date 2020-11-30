@@ -1,6 +1,6 @@
 {
   "name": "prometheus-browser",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "prometheus client library for browser to interact with push gateway",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -13,18 +13,21 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
+    "@types/uuid": "^8.3.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.4.4",
     "typescript": "^3.9"
   },
+  "dependencies": {
+    "uuid": "^8.3.1"
+  },
+  "peerDependencies": {},
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true
   },
-  "dependencies": {},
-  "peerDependencies": {},
   "author": "Yulong Ruan <ruanyu1@gmail.com>",
   "license": "MIT",
   "keywords": [

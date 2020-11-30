@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "strictNullChecks": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "target": "es5",
-    "lib": ["es2017", "es2015", "es5", "scripthost"],
+    "lib": ["es2017", "es2015", "esnext", "scripthost", "dom"],
     "outDir": "lib",
     "noUnusedLocals": true,
     "noUnusedParameters": true
