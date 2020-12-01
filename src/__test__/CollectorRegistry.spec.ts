@@ -1,6 +1,7 @@
-import { Histogram } from '../Histogram'
 import { CollectorRegistry, defaultRegistry } from '../CollectorRegistry'
+
 import { Counter } from '../Counter'
+import { Histogram } from '../Histogram'
 
 const EXPECTED_TEXT_SAMPLES_HISTOGRAM = `# HELP http_request_duration_seconds A histogram of the request duration
 # TYPE http_request_duration_seconds histogram
@@ -23,14 +24,14 @@ http_request_duration_seconds_sum 17.23
 http_request_duration_seconds_count 4
 `
 
-const EXPECTED_TEXT_SAMPLES_COUNTER = `# HELP appsearch_request_counter A counter of the total number of app-search requests
-# TYPE appsearch_request_counter counter
-appsearch_request_counter 1
+const EXPECTED_TEXT_SAMPLES_COUNTER = `# HELP http_request_counter A counter of the total number of requests
+# TYPE http_request_counter counter
+http_request_counter 1
 `
 
-const EXPECTED_TEXT_SAMPLES_COUNTER_LABELS = `# HELP appsearch_request_counter A counter of the total number of app-search requests
-# TYPE appsearch_request_counter counter
-appsearch_request_counter{code="200"} 2
+const EXPECTED_TEXT_SAMPLES_COUNTER_LABELS = `# HELP http_request_counter A counter of the total number of requests
+# TYPE http_request_counter counter
+http_request_counter{code="200"} 2
 `
 
 describe('Histogram', () => {
@@ -90,8 +91,8 @@ describe('Histogram', () => {
 
   it('should expose text format samples for counter', () => {
     const counter = new Counter({
-      name: 'appsearch_request_counter',
-      help: 'A counter of the total number of app-search requests',
+      name: 'http_request_counter',
+      help: 'A counter of the total number of requests',
       registry,
     })
 
@@ -103,8 +104,8 @@ describe('Histogram', () => {
 
   it('should expose text format samples for counter with labels', () => {
     const counter = new Counter({
-      name: 'appsearch_request_counter',
-      help: 'A counter of the total number of app-search requests',
+      name: 'http_request_counter',
+      help: 'A counter of the total number of requests',
       registry,
     })
 

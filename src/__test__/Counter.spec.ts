@@ -1,14 +1,14 @@
 import { Counter, defaultRegistry } from '../'
 
-describe('Histogram', () => {
+describe('Counter', () => {
   beforeEach(() => {
     defaultRegistry.reset()
   })
 
   it('should increase counter by 1', () => {
     const counter = new Counter({
-      name: 'appsearch_request_counter',
-      help: 'A counter of the total number of app-search requests',
+      name: 'http_request_counter',
+      help: 'A counter of the total number of requests',
     })
     counter.inc()
     const samples = counter.collect()
@@ -19,8 +19,8 @@ describe('Histogram', () => {
 
   it('should increase counter by the specified value', () => {
     const counter = new Counter({
-      name: 'appsearch_request_counter',
-      help: 'A counter of the total number of app-search requests',
+      name: 'http_request_counter',
+      help: 'A counter of the total number of requests',
     })
     counter.inc(2)
 
@@ -32,8 +32,8 @@ describe('Histogram', () => {
 
   it('should increase counter multiple times', () => {
     const counter = new Counter({
-      name: 'appsearch_request_counter',
-      help: 'A counter of the total number of app-search requests',
+      name: 'http_request_counter',
+      help: 'A counter of the total number of requests',
     })
     counter.inc()
     counter.inc()
