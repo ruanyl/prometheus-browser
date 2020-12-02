@@ -85,9 +85,9 @@ const gateway = new PushGateway({url: 'http://localhost:8080/metrics'})
 // by default metrics are sent with "POST" request: https://github.com/prometheus/pushgateway#post-method
 await gateway.push({job: 'pushgateway'})
 
-// push to a group
-await gateway.push({job: 'pushgateway', group: {client: 'foo'}})
+// push to a group, the group is arrya of tuple: [string, string]
+await gateway.push({job: 'pushgateway', group: [['client', 'foo']]})
 
 //if you need "PUT" method: https://github.com/prometheus/pushgateway#put-method
-await gateway.push({job: 'pushgateway', group: {client: 'foo'}, fetchOptions: {method: 'PUT'}})
+await gateway.push({job: 'pushgateway', group: [['client', 'foo']], fetchOptions: {method: 'PUT'}})
 ```
