@@ -9,7 +9,7 @@ interface PushGatewayConfig {
 
 interface PushOptions {
   job: string
-  instance?: string
+  group?: [string, string][]
   fetchOptions?: RequestInit
 }
 
@@ -27,14 +27,25 @@ export class PushGateway {
   }
 
   async push(options: PushOptions) {
-    const endpoint = `${this.url}/job/${options.job}/instance/${
-      options.instance || this.instance
-    }`
+    let groupPath = ''
+
+    if (options.group) {
+      options.group.forEach(([key, value]) => {
+        groupPath += `/${key}/${value}`
+      })
+    }
+
+    const endpoint = `${this.url}/job/${options.job}${groupPath}`
     const textPayload = this.registry.expose()
+
+    const method = options.fetchOptions?.method
+      ? options.fetchOptions.method
+      : 'POST'
+
     if (textPayload) {
       return fetch(endpoint, {
         ...options.fetchOptions,
-        method: 'POST',
+        method,
         headers: {
           'Content-Type': 'text/plain; version=0.0.4',
           ...options.fetchOptions?.headers,
