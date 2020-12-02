@@ -1,4 +1,4 @@
-## prometheus-browser ![travis](https://travis-ci.org/ruanyl/prometheus-browser.svg?branch=master)
+## prometheus-browser ![workflow](https://github.com/ruanyl/prometheus-browser/workflows/Build%20&%20Test/badge.svg)
 
 Prometheus client implementation for browser to interact with push gateway
 
@@ -73,7 +73,7 @@ const histogram = new Histogram({
 // use a timer
 const timer = histogram.startTimer()
 // observe a timer
-timer.observe()
+timer.observeDuration()
 ```
 
 ## With Push Gateway
