@@ -1,6 +1,6 @@
 {
   "name": "prometheus-browser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "prometheus client library for browser to interact with push gateway",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
