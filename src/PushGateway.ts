@@ -1,5 +1,3 @@
-import * as uuid from 'uuid'
-
 import { CollectorRegistry, defaultRegistry } from './CollectorRegistry'
 
 interface PushGatewayConfig {
@@ -14,7 +12,6 @@ interface PushOptions {
 }
 
 export class PushGateway {
-  instance: string = uuid.v4()
   registry = defaultRegistry
   url: string
 

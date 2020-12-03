@@ -22,9 +22,7 @@
     "ts-jest": "^26.4.4",
     "typescript": "^3.9"
   },
-  "dependencies": {
-    "uuid": "^8.3.1"
-  },
+  "dependencies": {},
   "peerDependencies": {},
   "prettier": {
     "trailingComma": "es5",
