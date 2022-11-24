@@ -34,6 +34,11 @@ const EXPECTED_TEXT_SAMPLES_COUNTER_LABELS = `# HELP http_request_counter A coun
 http_request_counter{code="200"} 2
 `
 
+const EXPECTED_TEXT_SAMPLES_COUNTER_DEFAULT_LABELS = `# HELP http_request_counter A counter of the total number of requests
+# TYPE http_request_counter counter
+http_request_counter{code="200",environment="production"} 2
+`
+
 describe('Histogram', () => {
   const registry = new CollectorRegistry()
   beforeEach(() => {
@@ -113,6 +118,21 @@ describe('Histogram', () => {
 
     const text = registry.expose()
     expect(text).toEqual(EXPECTED_TEXT_SAMPLES_COUNTER_LABELS)
+  })
+
+  it('should expose text format samples for counter with labels and default labels', () => {
+    registry.setDefaultLabels({ environment: 'production' })
+
+    const counter = new Counter({
+      name: 'http_request_counter',
+      help: 'A counter of the total number of requests',
+      registry,
+    })
+
+    counter.inc(2, { code: '200' })
+
+    const text = registry.expose()
+    expect(text).toEqual(EXPECTED_TEXT_SAMPLES_COUNTER_DEFAULT_LABELS)
   })
 
   it('should expose empty text when no samples', () => {
