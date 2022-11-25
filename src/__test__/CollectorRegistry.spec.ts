@@ -36,7 +36,7 @@ http_request_counter{code="200"} 2
 
 const EXPECTED_TEXT_SAMPLES_COUNTER_DEFAULT_LABELS = `# HELP http_request_counter A counter of the total number of requests
 # TYPE http_request_counter counter
-http_request_counter{code="200",environment="production"} 2
+http_request_counter{environment="production",code="200"} 2
 `
 
 describe('Histogram', () => {
