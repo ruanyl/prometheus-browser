@@ -40,16 +40,9 @@ export class CollectorRegistry {
         const help = `# HELP ${collector.name} ${collector.help}\n`
         const type = `# TYPE ${collector.name} ${collector.type}\n`
 
-        for (const sample of samples) {
-          sample.labels = sample.labels || {}
-
-          if (defaultLabelNames.length > 0) {
-            // Make a copy before mutating
-            sample.labels = { ...sample.labels }
-
-            for (const labelName of defaultLabelNames) {
-              sample.labels[labelName] = sample.labels[labelName] || this.defaultLabelMap[labelName]
-            }
+        if (defaultLabelNames.length > 0) {
+          for (const sample of samples) {
+            sample.labels = { ...this.defaultLabelMap, ...sample.labels }
           }
         }
 
