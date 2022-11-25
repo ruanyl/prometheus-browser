@@ -1,6 +1,8 @@
-## prometheus-browser ![workflow](https://github.com/ruanyl/prometheus-browser/workflows/Build%20&%20Test/badge.svg)
+# prometheus-browser ![workflow](https://github.com/ruanyl/prometheus-browser/workflows/Build%20&%20Test/badge.svg)
 
 Prometheus client implementation for browser to interact with push gateway
+
+## Metrics
 
 #### Counter
 ```typescript
@@ -74,6 +76,15 @@ const histogram = new Histogram({
 const timer = histogram.startTimer()
 // observe a timer
 timer.observeDuration()
+```
+
+#### Default labels
+```typescript
+import {defaultRegistry} from 'prometheus-browser'
+
+// set default labels to a registry
+// default labels will be merged with metric labels when exposing metrics from the registry
+defaultRegistry.setDefaultLabels({environment: 'production'})
 ```
 
 ## With Push Gateway
