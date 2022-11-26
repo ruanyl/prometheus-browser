@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "tsc --declaration",
+    "build": "tsc --project tsconfig.build.json --declaration",
     "prepublishOnly": "npm run build",
     "release": "standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
     "test": "npm run test-only",

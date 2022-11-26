@@ -1,7 +1,7 @@
 import { Counter, PushGateway, defaultRegistry } from '../'
 
 const mockedFetch = jest.fn()
-global.fetch = mockedFetch
+window.fetch = mockedFetch
 
 const ENDPOINT = 'http://localhost/metrics'
 
@@ -11,10 +11,6 @@ counter 1
 `
 
 describe('PushGateway', () => {
-  beforeEach(() => {
-    mockedFetch.mockReset()
-  })
-
   beforeEach(() => {
     mockedFetch.mockReset()
     defaultRegistry.reset()
