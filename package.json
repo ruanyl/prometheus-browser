@@ -5,8 +5,9 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "build": "./node_modules/.bin/tsc --declaration",
-    "prepublish": "npm run build",
+    "build": "tsc --declaration",
+    "prepublishOnly": "npm run build",
+    "release": "standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
     "test": "npm run test-only",
     "test-only": "jest --coverage",
     "test:watch": "jest --watch"
@@ -19,6 +20,7 @@
     "eslint": "^7.14.0",
     "eslint-config-react-typescript": "^1.0.5",
     "jest": "^26.6.3",
+    "standard-version": "^9.5.0",
     "ts-jest": "^26.4.4",
     "typescript": "^3.9"
   },
