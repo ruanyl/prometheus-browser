@@ -99,6 +99,10 @@ await gateway.push({job: 'pushgateway'})
 // push to a group, the group is arrya of tuple: [string, string]
 await gateway.push({job: 'pushgateway', group: [['client', 'foo']]})
 
-//if you need "PUT" method: https://github.com/prometheus/pushgateway#put-method
+// if you need "PUT" method: https://github.com/prometheus/pushgateway#put-method
 await gateway.push({job: 'pushgateway', group: [['client', 'foo']], fetchOptions: {method: 'PUT'}})
+
+// init gateway with fetch options, if you need apply a method or other options to every push
+const gateway2 = new PushGateway({url: 'http://localhost:8080/metrics', fetchOptions: {method: 'PUT'}})
+await gateway2.push({job: 'pushgateway', group: [['client', 'foo']]})
 ```
