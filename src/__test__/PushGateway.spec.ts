@@ -24,15 +24,13 @@ describe('PushGateway', () => {
     counter.inc()
 
     const gateway = new PushGateway({ url: ENDPOINT })
-    await gateway.push({
-      job: 'gateway',
-    })
-    expect(mockedFetch.mock.calls[0][0]).toBe(`${ENDPOINT}/job/gateway`)
+    await gateway.push()
+    expect(mockedFetch.mock.calls[0][0]).toBe(ENDPOINT)
     expect(mockedFetch.mock.calls[0][1].body).toBe(EXPECTED_PAYLOAD)
     expect(mockedFetch.mock.calls[0][1].method).toBe('POST')
   })
 
-  it('should push metrics to endpoint with group', async () => {
+  it('should push metrics to endpoint with job and group', async () => {
     const counter = new Counter({
       name: 'counter',
       help: 'A counter',
