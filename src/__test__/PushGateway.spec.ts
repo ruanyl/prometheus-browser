@@ -47,7 +47,7 @@ describe('PushGateway', () => {
     expect(mockedFetch.mock.calls[0][1].method).toBe('POST')
   })
 
-  it('should push metrics to endpoint with `PUT` method', async () => {
+  it('should push metrics to endpoint with `PUT` method from push options', async () => {
     const counter = new Counter({
       name: 'counter',
       help: 'A counter',
@@ -61,6 +61,28 @@ describe('PushGateway', () => {
       fetchOptions: {
         method: 'PUT',
       },
+    })
+    expect(mockedFetch.mock.calls[0][0]).toBe(`${ENDPOINT}/job/gateway/foo/bar`)
+    expect(mockedFetch.mock.calls[0][1].body).toBe(EXPECTED_PAYLOAD)
+    expect(mockedFetch.mock.calls[0][1].method).toBe('PUT')
+  })
+
+  it('should push metrics to endpoint with `PUT` method from gateway config', async () => {
+    const counter = new Counter({
+      name: 'counter',
+      help: 'A counter',
+    })
+    counter.inc()
+
+    const gateway = new PushGateway({
+      url: ENDPOINT,
+      fetchOptions: {
+        method: 'PUT',
+      },
+    })
+    await gateway.push({
+      job: 'gateway',
+      group: [['foo', 'bar']],
     })
     expect(mockedFetch.mock.calls[0][0]).toBe(`${ENDPOINT}/job/gateway/foo/bar`)
     expect(mockedFetch.mock.calls[0][1].body).toBe(EXPECTED_PAYLOAD)
